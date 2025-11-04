@@ -1,0 +1,43 @@
+inicio
+declare inteiro AA = 10;
+declare texto nome;
+declare inteiro idade;
+declare real salario;
+declare real y = 5.5;
+escreva("Valor de x: " + x);
+escreva("Valor de y: " + y);
+escreva("Digite seu nome: ");
+leia(nome);
+escreva("Digite sua idade: ");
+leia(idade);
+escreva("Digite seu salário: ");
+leia(salario);
+escreva("===================================");
+escreva("Dados informados:");
+escreva("Nome: " + nome);
+escreva("Idade: " + idade);
+escreva("Salário: " + salario);
+
+// Teste de estrutura condicional
+//se (idade >= 18) entao { escreva("Você é maior de idade.");
+//se (salario > 2000.0) entao { escreva("Você tem um bom salário!"); }; }
+//senao { escreva("Você é menor de idade."); };
+
+// Teste de loop
+//enquanto (contador == 0);
+//enquanto (contador > 3);
+ //   faca {
+ //           escreva("Loop enquanto - iteração: " + contador);
+ //           contador = contador + 1;
+
+
+// Teste de loop
+//para para (declare inteiro i = 0; i < 5; i = i + 1) faca { escreva("Loop para - iteração: " + i); };
+
+// Teste de expressões matemáticas
+declare inteiro resultado = (10 + 5) * 2 - 3;
+
+escreva("Resultado da expressão: " + resultado);
+escreva("Programa finalizado!");
+
+fim

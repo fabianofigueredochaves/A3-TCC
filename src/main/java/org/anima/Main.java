@@ -1,5 +1,65 @@
 package org.anima;
 
+import org.anima.antlr.CompiladorLangLexer;
+import org.anima.antlr.CompiladorLangParser;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.*;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // Nome do arquivo fixo (você pode mudar aqui)
+        String nomeArquivo = "programa.cpl";
+
+        System.out.println("📂 Lendo arquivo: " + nomeArquivo);
+        System.out.println("=====================================\n");
+
+        // Cria o CharStream a partir do arquivo
+        CharStream input = CharStreams.fromFileName(nomeArquivo);
+
+        // Cria o lexer
+        CompiladorLangLexer lexer = new CompiladorLangLexer(input);
+
+        // Cria o stream de tokens
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        // Cria o parser
+        CompiladorLangParser parser = new CompiladorLangParser(tokens);
+
+        // Inicia a análise
+        ParseTree tree = parser.programa();
+
+        // Verifica resultado
+        if (parser.getNumberOfSyntaxErrors() == 0) {
+            System.out.println("✅ CÓDIGO CORRETO!");
+        } else {
+            System.out.println("❌ CÓDIGO COM ERROS!");
+        }
+    }
+}
+
+/*
+// Classe para tratar erros de forma mais amigável
+class ErrorListener extends BaseErrorListener {
+    @Override
+    public void syntaxError(Recognizer<?, ?> recognizer,
+                            Object offendingSymbol,
+                            int line,
+                            int charPositionInLine,
+                            String msg,
+                            RecognitionException e) {
+        System.err.println("❌ ERRO SINTÁTICO na linha " + line + ", coluna " + charPositionInLine);
+        System.err.println("   " + msg);
+
+        // Mostra o token problemático se disponível
+        if (offendingSymbol instanceof Token) {
+            Token token = (Token) offendingSymbol;
+            System.err.println("   Token problemático: '" + token.getText() + "'");
+        }
+        System.err.println();
+    }
+}
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import org.antlr.v4.runtime.*;
@@ -11,7 +71,7 @@ public class Main {
         // Código de exemplo em CompiladorLang
         String codigoFonte =
                 "inicio\n" +
-                        "    declare inteiro idade = 25;\n" +
+                        "    dMaineclare inteiro idade = 25;\n" +
                         "    declare real salario = 1500.50;\n" +
                         "    declare texto nome = \"João Silva\";\n" +
                         "    \n" +
@@ -49,13 +109,15 @@ public class Main {
     }
 }
 
-/*
 
+
+import org.anima.antlr.g4.CompiladorLangLexer;
+import org.anima.antlr.g4.CompiladorLangParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.IOException;
 
-public class TesteParser {
+public class Main {
     public static void main(String[] args) throws IOException {
         // Código de exemplo em CompiladorLang
         String codigoFonte =
@@ -104,4 +166,4 @@ public class TesteParser {
     }
 }
 
- */
+*/

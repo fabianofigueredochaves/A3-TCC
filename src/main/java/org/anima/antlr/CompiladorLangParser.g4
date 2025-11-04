@@ -7,19 +7,16 @@ options {
 }
 
 // --- REGRA INICIAL: Um programa completo ---
-// Todo programa começa com 'inicio', tem uma lista de comandos, e termina com 'fim'
 programa
     : KW_INICIO listaComandos KW_FIM
     ;
 
 // --- LISTA DE COMANDOS ---
-// Um programa pode ter zero ou mais comandos
 listaComandos
     : comando*
     ;
 
 // --- COMANDO ---
-// Um comando pode ser uma das seguintes opções:
 comando
     : declaracao
     | atribuicao
@@ -30,10 +27,9 @@ comando
     ;
 
 // --- DECLARAÇÃO DE VARIÁVEL ---
-// Sintaxe: declare <tipo> <identificador>;
-// ou: declare <tipo> <identificador> = <expressao>;
 declaracao
     : KW_DECLARE tipo IDENTIFICADOR (OP_ATRIBUICAO expressao)? PONTO_VIRGULA
+//    : KW_DECLARE tipo atribuicao
     ;
 
 // --- TIPOS DE DADOS ---
@@ -44,14 +40,11 @@ tipo
     ;
 
 // --- ATRIBUIÇÃO ---
-// Sintaxe: <identificador> = <expressao>;
 atribuicao
     : IDENTIFICADOR OP_ATRIBUICAO expressao PONTO_VIRGULA
     ;
 
-// --- ESTRUTURA CONDICIONAL (if...else) ---
-// Sintaxe: se (<condicao>) entao { <comandos> } senao { <comandos> };
-// O bloco 'senao' é opcional
+// --- ESTRUTURA CONDICIONAL ---
 estruturaCondicional
     : KW_SE ABRE_PARENTESES expressao FECHA_PARENTESES KW_ENTAO
       ABRE_CHAVES listaComandos FECHA_CHAVES
@@ -65,85 +58,90 @@ estruturaRepeticao
     | loopPara
     ;
 
-// Loop ENQUANTO (while)
-// Sintaxe: enquanto (<condicao>) faca { <comandos> };
+// Loop ENQUANTO
 loopEnquanto
     : KW_ENQUANTO ABRE_PARENTESES expressao FECHA_PARENTESES
       KW_FACA ABRE_CHAVES listaComandos FECHA_CHAVES PONTO_VIRGULA
     ;
 
-// Loop PARA (for)
-// Sintaxe: para (<inicializacao>; <condicao>; <incremento>) faca { <comandos> };
-// A inicialização pode ser uma declaração ou atribuição
+// Loop PARA
 loopPara
     : KW_PARA ABRE_PARENTESES
-      (declaracaoLoop | atribuicaoLoop) PONTO_VIRGULA
+      inicializacaoLoop PONTO_VIRGULA
       expressao PONTO_VIRGULA
-      atribuicaoLoop
+      incrementoLoop
       FECHA_PARENTESES
       KW_FACA ABRE_CHAVES listaComandos FECHA_CHAVES PONTO_VIRGULA
     ;
 
-// Declaração dentro do loop 'para' (sem ponto e vírgula no final)
+// Inicialização do loop
+inicializacaoLoop
+    : declaracaoLoop
+    | atribuicaoLoop
+    |
+    ;
+
+// Incremento do loop
+incrementoLoop
+    : atribuicaoLoop
+    |
+    ;
+
+// Declaração dentro do loop
 declaracaoLoop
     : KW_DECLARE tipo IDENTIFICADOR (OP_ATRIBUICAO expressao)?
     ;
 
-// Atribuição dentro do loop 'para' (sem ponto e vírgula no final)
+// Atribuição dentro do loop
 atribuicaoLoop
     : IDENTIFICADOR OP_ATRIBUICAO expressao
     ;
 
-// --- COMANDO DE LEITURA (scanf) ---
-// Sintaxe: leia(<identificador>);
+// --- COMANDO DE LEITURA ---
 comandoLeitura
     : KW_LEIA ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES PONTO_VIRGULA
     ;
 
-// --- COMANDO DE ESCRITA (printf) ---
-// Sintaxe: escreva(<expressao>);
+// --- COMANDO DE ESCRITA ---
 comandoEscrita
     : KW_ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES PONTO_VIRGULA
     ;
 
 // --- EXPRESSÕES ---
-// Esta é a parte mais importante para garantir a precedência correta dos operadores
 
-// Expressão de nível mais alto: Operadores lógicos OR (menor precedência)
+// Nível 1: OR lógico
 expressao
     : expressaoE (KW_OU expressaoE)*
     ;
 
-// Operadores lógicos AND
+// Nível 2: AND lógico
 expressaoE
     : expressaoRelacional (KW_E expressaoRelacional)*
     ;
 
-// Operadores relacionais (==, !=, <, >, <=, >=)
+// Nível 3: Operadores relacionais
 expressaoRelacional
     : expressaoAditiva
-        expressaoAditiva
-      )?
     ;
 
-// Operadores aditivos (+ e -)
+// Nível 4: Adição e subtração
 expressaoAditiva
     : expressaoMultiplicativa ((OP_SOMA | OP_SUBTRACAO) expressaoMultiplicativa)*
     ;
 
-// Operadores multiplicativos (* e /)
+// Nível 5: Multiplicação e divisão
 expressaoMultiplicativa
     : expressaoUnaria ((OP_MULTIPLICACAO | OP_DIVISAO) expressaoUnaria)*
     ;
 
-// Expressões unárias (NOT lógico, negativo)
+// Nível 6: Operadores unários
 expressaoUnaria
     : KW_NAO expressaoUnaria
     | OP_SUBTRACAO expressaoUnaria
     | expressaoPrimaria
     ;
 
-// Expressões primárias (valores básicos e parênteses)
+// Nível 7: Expressões primárias
 expressaoPrimaria
     : NUMERO_INTEIRO
     | NUMERO_REAL
