@@ -19,24 +19,29 @@ escreva("Idade: " + idade);
 escreva("Salário: " + salario);
 
 // Teste de estrutura condicional
-//se (idade >= 18) entao { escreva("Você é maior de idade.");
-//se (salario > 2000.0) entao { escreva("Você tem um bom salário!"); }; }
-//senao { escreva("Você é menor de idade."); };
+se (idade > 18) entao {
+    escreva("Você é maior de idade."); }
+senao {
+    escreva("Você é menor de idade."); };
 
-// Teste de loop
-//enquanto (contador == 0);
-//enquanto (contador > 3);
- //   faca {
- //           escreva("Loop enquanto - iteração: " + contador);
- //           contador = contador + 1;
+se (salario > 2000.0) entao {
+    escreva("Você tem um bom salário!"); };
 
 
 // Teste de loop
-//para para (declare inteiro i = 0; i < 5; i = i + 1) faca { escreva("Loop para - iteração: " + i); };
+
+enquanto (contador > 3) faca {
+    escreva("Loop enquanto - iteração: " + contador);
+    contador = contador + 1;
+};
+
+// Teste de loop
+para (declare inteiro i = 0; i < 5; i = i + 1) faca {
+    escreva("Loop para - iteração: " + i);
+};
 
 // Teste de expressões matemáticas
 declare inteiro resultado = (10 + 5) * 2 - 3;
-
 escreva("Resultado da expressão: " + resultado);
 escreva("Programa finalizado!");
 
