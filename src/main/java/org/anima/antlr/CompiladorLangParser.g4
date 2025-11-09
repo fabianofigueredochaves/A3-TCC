@@ -3,7 +3,7 @@ parser grammar CompiladorLangParser;
 options {
     tokenVocab = CompiladorLangLexer;
 }
-
+/*
 @members {
     // Lista para armazenar variáveis já declaradas
     private java.util.Set<String> variaveisDeclaradas = new java.util.HashSet<>();
@@ -42,6 +42,7 @@ options {
         return new java.util.HashSet<>(variaveisDeclaradas);
     }
 }
+*/
 // ============================================
 // REGRAS DO PARSER
 // ============================================
@@ -69,11 +70,13 @@ comando
 // --- DECLARAÇÃO DE VARIÁVEL ---
 declaracao
     : KW_DECLARE tipo IDENTIFICADOR
+ /*
     {
          String nomeVar = $IDENTIFICADOR.text;
          int linha = $IDENTIFICADOR.line;
          declararVariavel(nomeVar, linha);
     }
+    */
     (OP_ATRIBUICAO expressao)? PONTO_VIRGULA
     ;
 
@@ -87,11 +90,12 @@ tipo
 // --- ATRIBUIÇÃO ---
 atribuicao
     : IDENTIFICADOR
-    {
+ /*   {
          String nomeVar = $IDENTIFICADOR.text;
          int linha = $IDENTIFICADOR.line;
          verificarDeclaracao(nomeVar, linha);
     }
+ */
     OP_ATRIBUICAO expressao PONTO_VIRGULA
     ;
 
@@ -141,33 +145,36 @@ incrementoLoop
 // Declaração dentro do loop
 declaracaoLoop
     : KW_DECLARE tipo IDENTIFICADOR
-    {
+ /*   {
          String nomeVar = $IDENTIFICADOR.text;
          int linha = $IDENTIFICADOR.line;
          declararVariavel(nomeVar, linha);
     }
+   */
     (OP_ATRIBUICAO expressao)?
     ;
 
 // Atribuição dentro do loop
 atribuicaoLoop
     : IDENTIFICADOR
-    {
+/*    {
          String nomeVar = $IDENTIFICADOR.text;
          int linha = $IDENTIFICADOR.line;
          verificarDeclaracao(nomeVar, linha);
     }
+  */
     OP_ATRIBUICAO expressao
     ;
 
 // --- COMANDO DE LEITURA ---
 comandoLeitura
     : KW_LEIA ABRE_PARENTESES IDENTIFICADOR
-    {
+ /*   {
          String nomeVar = $IDENTIFICADOR.text;
          int linha = $IDENTIFICADOR.line;
          verificarDeclaracao(nomeVar, linha);
     }
+   */
     FECHA_PARENTESES PONTO_VIRGULA
     ;
 
@@ -241,11 +248,12 @@ expressaoPrimaria
     | NUMERO_REAL                         // 123.45
     | TEXTO_LITERAL                       // "texto"
     | IDENTIFICADOR                       // variavel
-    {
+ /*   {
               String nomeVar = $IDENTIFICADOR.text;
               int linha = $IDENTIFICADOR.line;
               verificarDeclaracao(nomeVar, linha);
     }
+   */
     | ABRE_PARENTESES expressao FECHA_PARENTESES  // (expr)
     ;
 

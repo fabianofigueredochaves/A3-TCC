@@ -1,9 +1,11 @@
 inicio
-declare inteiro AA = 10;
-declare texto nome;
+declare inteiro AA = "lalala"; // erro nao detectado
+declare texto nome = "fabiano";
 declare inteiro idade;
+idade = 3.6;
 declare real idades;
 declare real y = 5.5;
+declare real z = "teste"; // erro nao detectado
 declare inteiro x;
 escreva("Valor de x: " + x);
 escreva("Valor de y: " + y);
