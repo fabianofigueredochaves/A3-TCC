@@ -4,7 +4,8 @@ public enum TipoSimbolo {
     INTEIRO("inteiro"),
     REAL("real"),
     TEXTO("texto"),
-    DESCONHECIDO("desconhecido");
+    BOOLEANO("booleano"),
+    DESCONHECIDO("desconhecido") ;
 
     private final String nome;
 

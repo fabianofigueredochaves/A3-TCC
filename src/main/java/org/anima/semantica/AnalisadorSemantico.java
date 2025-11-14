@@ -38,17 +38,44 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
     @Override
     public TipoSimbolo visitPrograma(CompiladorLangParser.ProgramaContext ctx) {
-        return null;
+        // Visita todos os comandos do programa
+        if (ctx.listaComandos() != null) {
+            visit(ctx.listaComandos());
+        }
+        return TipoSimbolo.DESCONHECIDO;
     }
 
     @Override
     public TipoSimbolo visitListaComandos(CompiladorLangParser.ListaComandosContext ctx) {
-        return null;
+        // Visita cada comando da lista
+        if (ctx.comando() != null) {
+            visit((ParseTree) ctx.comando());
+        }
+        if (ctx.listaComandos() != null) {
+            visit(ctx.listaComandos()); //Verificar
+        }
+        return TipoSimbolo.DESCONHECIDO;
     }
 
     @Override
     public TipoSimbolo visitComando(CompiladorLangParser.ComandoContext ctx) {
-        return null;
+        // Visita o tipo específico de comando
+        if (ctx.declaracao() != null) {
+            return visit(ctx.declaracao());
+        } else if (ctx.atribuicao() != null) {
+            return visit(ctx.atribuicao());
+        } else if (ctx.comandoSe() != null) {
+            return visit(ctx.comandoSe());
+        } else if (ctx.comandoEnquanto() != null) {
+            return visit(ctx.comandoEnquanto());
+        } else if (ctx.comandoPara() != null) {
+            return visit(ctx.comandoPara());
+        } else if (ctx.comandoLeitura() != null) {
+            return visit(ctx.comandoLeitura());
+        } else if (ctx.comandoEscrita() != null) {
+            return visit(ctx.comandoEscrita());
+        }
+        return TipoSimbolo.DESCONHECIDO;
     }
 
     @Override
@@ -206,17 +233,144 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
     @Override
     public TipoSimbolo visitComandoEscrita(CompiladorLangParser.ComandoEscritaContext ctx) {
-        return null;
+        // Visita a expressão a ser escrita
+        if (ctx.expressao() != null) {
+            visit(ctx.expressao());
+        }
+        return TipoSimbolo.DESCONHECIDO;
     }
+/*
+    @Override
+    public TipoSimbolo visitComandoPara(CompiladorLangParser.ComandoParaContext ctx) {
+        // Visita a inicialização
+        if (ctx.atribuicao() != null) {
+            visit(ctx.atribuicao());
+        }
+
+        // Visita a condição
+        if (ctx.expressao(0) != null) {
+            TipoSimbolo tipoCondicao = visit(ctx.expressao(0));
+
+            if (tipoCondicao != TipoSimbolo.BOOLEANO && tipoCondicao != TipoSimbolo.DESCONHECIDO) {
+                erros.add(new ErroSemantico(
+                        "Condição do PARA deve ser uma expressão booleana",
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ErroSemantico.TipoErro.TIPO_INCOMPATIVEL
+                ));
+            }
+        }
+
+        // Visita o incremento (segunda expressão)
+        if (ctx.expressao(1) != null) {
+            visit(ctx.expressao(1));
+        }
+
+        // Visita o bloco de comandos
+        if (ctx.listaComandos() != null) {
+            visit(ctx.listaComandos());
+        }
+
+        return TipoSimbolo.DESCONHECIDO;
+    }
+*/
+    /*
+    @Override
+    public TipoSimbolo visitComandoSe(CompiladorLangParser.ComandoSeContext ctx) {
+        // Visita a expressão condicional
+        TipoSimbolo tipoCondicao = visit(ctx.expressao());
+
+        // Verifica se a condição é booleana (ou compatível)
+        if (tipoCondicao != TipoSimbolo.BOOLEANO && tipoCondicao != TipoSimbolo.DESCONHECIDO) {
+            erros.add(new ErroSemantico(
+                    "Condição do SE deve ser uma expressão booleana",
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine(),
+                    ErroSemantico.TipoErro.TIPO_INCOMPATIVEL
+            ));
+        }
+
+        // Visita o bloco ENTÃO
+        if (ctx.listaComandos(0) != null) {
+            visit(ctx.listaComandos(0));
+        }
+
+        // Visita o bloco SENÃO (se existir)
+        if (ctx.listaComandos(1) != null) {
+            visit(ctx.listaComandos(1));
+        }
+
+        return TipoSimbolo.DESCONHECIDO;
+    }
+*/
+ /*
+    @Override
+    public TipoSimbolo visitComandoEnquanto(CompiladorLangParser.ComandoEnquantoContext ctx) {
+        // Visita a expressão condicional
+        TipoSimbolo tipoCondicao = visit(ctx.expressao());
+
+        // Verifica se a condição é booleana
+        if (tipoCondicao != TipoSimbolo.BOOLEANO && tipoCondicao != TipoSimbolo.DESCONHECIDO) {
+            erros.add(new ErroSemantico(
+                    "Condição do ENQUANTO deve ser uma expressão booleana",
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine(),
+                    ErroSemantico.TipoErro.TIPO_INCOMPATIVEL
+            ));
+        }
+
+        // Visita o bloco de comandos
+        if (ctx.listaComandos() != null) {
+            visit(ctx.listaComandos());
+        }
+
+        return TipoSimbolo.DESCONHECIDO;
+    }
+*/
 
     @Override
     public TipoSimbolo visitExpressao(CompiladorLangParser.ExpressaoContext ctx) {
-        return null;
+        // Expressão OU lógica
+        if (ctx.expressaoE().size() > 1) {
+            // Verifica se ambos os operandos são booleanos
+            TipoSimbolo tipo1 = visit(ctx.expressaoE(0));
+            TipoSimbolo tipo2 = visit(ctx.expressaoE(1));
+
+            if((tipo2 != TipoSimbolo.BOOLEANO && tipo2 != TipoSimbolo.DESCONHECIDO)) {
+                erros.add(new ErroSemantico(
+                        "Operador OU requer operandos booleanos",
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ErroSemantico.TipoErro.OPERACAO_INVALIDA
+                ));
+                return TipoSimbolo.DESCONHECIDO;
+            }
+            return TipoSimbolo.BOOLEANO;
+        }
+
+        return visit(ctx.expressaoE(0));
     }
 
     @Override
     public TipoSimbolo visitExpressaoE(CompiladorLangParser.ExpressaoEContext ctx) {
-        return null;
+        // Expressão E lógica
+        if (ctx.expressaoRelacional().size() > 1) {
+            TipoSimbolo tipo1 = visit(ctx.expressaoRelacional(0));
+            TipoSimbolo tipo2 = visit(ctx.expressaoRelacional(1));
+
+            if ((tipo2 != TipoSimbolo.BOOLEANO && tipo2 != TipoSimbolo.DESCONHECIDO)) {
+                erros.add(new ErroSemantico(
+                        "Operador E requer operandos booleanos",
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ErroSemantico.TipoErro.OPERACAO_INVALIDA
+                ));
+                return TipoSimbolo.DESCONHECIDO;
+            }
+            return TipoSimbolo.BOOLEANO;
+        }
+
+        return visit(ctx.expressaoRelacional(0));
     }
 
     @Override
@@ -241,7 +395,11 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
     @Override
     public TipoSimbolo visitExpressaoAditiva(CompiladorLangParser.ExpressaoAditivaContext ctx) {
-        TipoSimbolo tipoEsquerda = visit(ctx.expressaoMultiplicativa(0));
+
+        if (ctx.expressaoMultiplicativa().size() > 1) {
+
+
+            TipoSimbolo tipoEsquerda = visit(ctx.expressaoMultiplicativa(0));
 
         for (int i = 1; i < ctx.expressaoMultiplicativa().size(); i++) {
             TipoSimbolo tipoDireita = visit(ctx.expressaoMultiplicativa(i));
@@ -251,24 +409,67 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
         return tipoEsquerda;
     }
+        return visit(ctx.expressaoMultiplicativa(0));
+    }
+
 
     @Override
     public TipoSimbolo visitExpressaoMultiplicativa(CompiladorLangParser.ExpressaoMultiplicativaContext ctx) {
-        TipoSimbolo tipoEsquerda = visit(ctx.expressaoUnaria(0));
+        //TipoSimbolo tipoEsquerda = visit(ctx.expressaoUnaria(0));
 
-        for (int i = 1; i < ctx.expressaoUnaria().size(); i++) {
-            TipoSimbolo tipoDireita = visit(ctx.expressaoUnaria(i));
-            // Pega o operador (* ou /)
-            String operador = ctx.getChild(i * 2 - 1).getText();
-            tipoEsquerda = inferirTipoOperacao(tipoEsquerda, tipoDireita, operador, ctx.start.getLine());
+        if (ctx.expressaoUnaria().size() > 1) {
+            TipoSimbolo tipoEsquerda = visit(ctx.expressaoUnaria(0));
+
+
+            for (int i = 1; i < ctx.expressaoUnaria().size(); i++) {
+                TipoSimbolo tipoDireita = visit(ctx.expressaoUnaria(i));
+                // Pega o operador (* ou /)
+                String operador = ctx.getChild(i * 2 - 1).getText();
+                tipoEsquerda = inferirTipoOperacao(tipoEsquerda, tipoDireita, operador, ctx.start.getLine());
+
+            }
+
+            return tipoEsquerda;
         }
-
-        return tipoEsquerda;
+        return visit(ctx.expressaoUnaria(0));
     }
 
     @Override
     public TipoSimbolo visitExpressaoUnaria(CompiladorLangParser.ExpressaoUnariaContext ctx) {
-        return null;
+        // Expressões unárias (NOT, negação)
+        if (ctx.KW_NAO() != null) {
+            TipoSimbolo tipoOperando = visit(ctx.expressaoUnaria());
+
+            if (tipoOperando != TipoSimbolo.BOOLEANO && tipoOperando != TipoSimbolo.DESCONHECIDO) {
+                erros.add(new ErroSemantico(
+                        "Operador NAO requer operando booleano",
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ErroSemantico.TipoErro.OPERACAO_INVALIDA
+                ));
+                return TipoSimbolo.DESCONHECIDO;
+            }
+            return TipoSimbolo.BOOLEANO;
+        }
+
+        if (ctx.OP_SUBTRACAO() != null) {
+            TipoSimbolo tipoOperando = visit(ctx.expressaoUnaria());
+
+            if (tipoOperando != TipoSimbolo.INTEIRO &&
+                    tipoOperando != TipoSimbolo.REAL &&
+                    tipoOperando != TipoSimbolo.DESCONHECIDO) {
+                erros.add(new ErroSemantico(
+                        "Operador de negação (-) requer operando numérico",
+                        ctx.start.getLine(),
+                        ctx.start.getCharPositionInLine(),
+                        ErroSemantico.TipoErro.OPERACAO_INVALIDA
+                ));
+                return TipoSimbolo.DESCONHECIDO;
+            }
+            return tipoOperando;
+        }
+
+        return visit(ctx.expressaoPrimaria());
     }
 
     // ===== VISITAÇÃO DE EXPRESSÕES PRIMÁRIAS =====
@@ -303,6 +504,12 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
             // Aviso: variável pode não estar inicializada
             if (!simbolo.isInicializada()) {
+                erros.add(new ErroSemantico(
+                        "Variável '" + nomeVariavel + "' pode não estar inicializada",
+                        linha,
+                        coluna,
+                        ErroSemantico.TipoErro.VARIAVEL_NAO_INICIALIZADA
+                ));
                 System.err.println(String.format(
                         "⚠️  AVISO na linha %d, coluna %d: Variável '%s' pode não estar inicializada",
                         linha, coluna, nomeVariavel
@@ -341,6 +548,17 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
 
     // ===== MÉTODOS AUXILIARES =====
 
+    private TipoSimbolo obterTipo(CompiladorLangParser.TipoContext ctx) {
+        if (ctx.KW_INTEIRO() != null) {
+            return TipoSimbolo.INTEIRO;
+        } else if (ctx.KW_REAL() != null) {
+            return TipoSimbolo.REAL;
+        } else if (ctx.KW_TEXTO() != null) {
+            return TipoSimbolo.TEXTO;
+        }
+        return TipoSimbolo.DESCONHECIDO;
+    }
+
     private boolean tiposCompativeis(TipoSimbolo tipo1, TipoSimbolo tipo2) {
 
        // return true;  // Ignora erros já reportados
@@ -374,6 +592,15 @@ public class AnalisadorSemantico implements CompiladorLangParserVisitor<TipoSimb
         if (tipo1 == TipoSimbolo.TEXTO && tipo2 == TipoSimbolo.TEXTO) {
             return TipoSimbolo.TEXTO;
         }
+
+        /*
+         erros.add(new ErroSemantico(
+                                  "Operação '" + operador + "' não pode ser aplicada aos tipos " + tipo1 + " e " + tipo2,
+                          linha,
+            0,
+                          ErroSemantico.TipoErro.OPERACAO_INVALIDA
+                          ));
+         */
 
         return TipoSimbolo.DESCONHECIDO;
     }

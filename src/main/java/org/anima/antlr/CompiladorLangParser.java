@@ -193,41 +193,14 @@ public class CompiladorLangParser extends Parser {
 			if ( visitor instanceof CompiladorLangParserVisitor ) return ((CompiladorLangParserVisitor<? extends T>)visitor).visitListaComandos(this);
 			else return visitor.visitChildren(this);
 		}
-	}
 
-	public final ListaComandosContext listaComandos() throws RecognitionException {
-		ListaComandosContext _localctx = new ListaComandosContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_listaComandos);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(53);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 274877934728L) != 0)) {
-				{
-				{
-				setState(50);
-				comando();
-				}
-				}
-				setState(55);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
+      //  public ParseTree listaComandos() {
+      //  }
+    }
+
+    public final ListaComandosContext listaComandos() throws RecognitionException {
+        return null;
+    }
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ComandoContext extends ParserRuleContext {
@@ -266,7 +239,16 @@ public class CompiladorLangParser extends Parser {
 			if ( visitor instanceof CompiladorLangParserVisitor ) return ((CompiladorLangParserVisitor<? extends T>)visitor).visitComando(this);
 			else return visitor.visitChildren(this);
 		}
-	}
+
+     //   public ParseTree comandoSe() {
+     //   }
+
+    //    public ParseTree comandoEnquanto() {
+    //    }
+
+    //    public ParseTree comandoPara() {
+    //    }
+    }
 
 	public final ComandoContext comando() throws RecognitionException {
 		ComandoContext _localctx = new ComandoContext(_ctx, getState());
