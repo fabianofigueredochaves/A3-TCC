@@ -1,13 +1,13 @@
 inicio
-declare inteiro AA = "lalala"; // erro nao detectado
+declare inteiro AA = 10; // erro nao detectado
 declare texto nome = "fabiano";
 declare inteiro idade;
-idade = 3.6;
+idade = 36;
 declare real idades;
 declare real y = 5.5;
-declare real z = "teste"; // erro nao detectado
+declare real z = 15.0; // erro nao detectado
 declare inteiro x;
-escreva("Valor de x: " + x);
+escreva("Valor de x: " + 1);
 escreva("Valor de y: " + y);
 escreva("Digite seu nome: ");
 leia(nome);
@@ -33,11 +33,13 @@ se (salario > 2000.0) entao {
 
 
 // Teste de loop
-declare inteiro contador;
-enquanto (contador > 3) faca {
+declare inteiro contador = 0;
+
+enquanto (contador < 3) faca {
     escreva("Loop enquanto - iteração: " + contador);
     contador = contador + 1;
 };
+
 declare inteiro nomeNOME;
 // Teste de loop
 para (declare inteiro i = 0; i < 5; i = i + 1) faca {

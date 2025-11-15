@@ -1,4 +1,4 @@
-// Generated from /home/fabiano/IdeaProjects/A3-TCC/src/main/java/org/anima/antlr/CompiladorLangParser.g4 by ANTLR 4.13.2
+// Generated from C:/Users/Raphael/IdeaProjects/A3-TCC/src/main/java/org/anima/antlr/CompiladorLangParser.g4 by ANTLR 4.13.2
 package org.anima.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
