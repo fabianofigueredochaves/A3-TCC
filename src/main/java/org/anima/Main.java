@@ -1,7 +1,10 @@
 package org.anima;
 
+import org.anima.semantica.TabelaSimbolos;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.anima.semantica.AnalisadorSemantico;
@@ -11,6 +14,7 @@ import org.anima.antlr.CompiladorLangLexer;
 import org.anima.antlr.CompiladorLangParser;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 public class Main {
     public static void main(String[] args) {
@@ -114,6 +118,18 @@ public class Main {
 
             System.out.println("\n✅ COMPILAÇÃO CONCLUÍDA COM SUCESSO!");
             System.out.println("   O código está sintaticamente e semanticamente correto.\n");
+
+            GeradorDeCodigoVisitor gerador = new GeradorDeCodigoVisitor();
+
+// 3. Visitar a árvore para gerar o código Java completo
+            String codigoJava = gerador.visitPrograma((CompiladorLangParser.ProgramaContext) tree);
+
+            try (PrintWriter out = new PrintWriter("ProgramaCompilado.java")) {
+                out.println(codigoJava);
+                System.out.println("Código gerado com sucesso em ProgramaCompilado.java!");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
 
         } catch (IOException e) {
             System.err.println("❌ ERRO ao ler o arquivo: " + e.getMessage());
