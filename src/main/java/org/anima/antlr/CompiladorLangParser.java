@@ -1,4 +1,4 @@
-// Generated from C:/Users/Raphael/IdeaProjects/A3-TCC/src/main/java/org/anima/antlr/CompiladorLangParser.g4 by ANTLR 4.13.2
+// Generated from /home/fabiano/IdeaProjects/A3-TCC/src/main/java/org/anima/antlr/CompiladorLangParser.g4 by ANTLR 4.13.2
 package org.anima.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -335,12 +335,14 @@ public class CompiladorLangParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class DeclaracaoContext extends ParserRuleContext {
+		public Token id;
+		public ExpressaoContext init;
 		public TerminalNode KW_DECLARE() { return getToken(CompiladorLangParser.KW_DECLARE, 0); }
 		public TipoContext tipo() {
 			return getRuleContext(TipoContext.class,0);
 		}
-		public TerminalNode IDENTIFICADOR() { return getToken(CompiladorLangParser.IDENTIFICADOR, 0); }
 		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
+		public TerminalNode IDENTIFICADOR() { return getToken(CompiladorLangParser.IDENTIFICADOR, 0); }
 		public TerminalNode OP_ATRIBUICAO() { return getToken(CompiladorLangParser.OP_ATRIBUICAO, 0); }
 		public ExpressaoContext expressao() {
 			return getRuleContext(ExpressaoContext.class,0);
@@ -376,7 +378,7 @@ public class CompiladorLangParser extends Parser {
 			setState(65);
 			tipo();
 			setState(66);
-			match(IDENTIFICADOR);
+			((DeclaracaoContext)_localctx).id = match(IDENTIFICADOR);
 			setState(69);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -385,7 +387,7 @@ public class CompiladorLangParser extends Parser {
 				setState(67);
 				match(OP_ATRIBUICAO);
 				setState(68);
-				expressao();
+				((DeclaracaoContext)_localctx).init = expressao();
 				}
 			}
 
@@ -460,12 +462,14 @@ public class CompiladorLangParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class AtribuicaoContext extends ParserRuleContext {
-		public TerminalNode IDENTIFICADOR() { return getToken(CompiladorLangParser.IDENTIFICADOR, 0); }
+		public Token destino;
+		public ExpressaoContext valor;
 		public TerminalNode OP_ATRIBUICAO() { return getToken(CompiladorLangParser.OP_ATRIBUICAO, 0); }
+		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
+		public TerminalNode IDENTIFICADOR() { return getToken(CompiladorLangParser.IDENTIFICADOR, 0); }
 		public ExpressaoContext expressao() {
 			return getRuleContext(ExpressaoContext.class,0);
 		}
-		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
 		public AtribuicaoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -492,11 +496,11 @@ public class CompiladorLangParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(75);
-			match(IDENTIFICADOR);
+			((AtribuicaoContext)_localctx).destino = match(IDENTIFICADOR);
 			setState(76);
 			match(OP_ATRIBUICAO);
 			setState(77);
-			expressao();
+			((AtribuicaoContext)_localctx).valor = expressao();
 			setState(78);
 			match(PONTO_VIRGULA);
 			}

@@ -1,54 +1,62 @@
 inicio
-declare inteiro AA = 10; // erro nao detectado
-declare texto nome = "fabiano";
-declare inteiro idade;
-idade = 36;
-declare real idades;
-declare real y = 5.5;
-declare real z = 15.0; // erro nao detectado
-declare inteiro x;
-escreva("Valor de x: " + 1);
-escreva("Valor de y: " + y);
-escreva("Digite seu nome: ");
-leia(nome);
-escreva("Digite sua idade: ");
-leia(idade);
-escreva("Digite seu salário: ");
-declare real salario;
-leia(salario);
-escreva("===================================");
-escreva("Dados informados:");
-escreva("Nome: " + nome);
-escreva("Idade: " + idade);
-escreva("Salário: " + salario);
 
-// Teste de estrutura condicional
-se (idade > 18) entao {
-    escreva("Você é maior de idade."); }
-senao {
-    escreva("Você é menor de idade."); };
+declare inteiro AA = 10; // ok
+declare texto nome = "fabiano"; // ok
+declare inteiro idade;  // ok
+idade = 36 + 85; // ok
+idade = 76 - 35; // ok
+idade = 80 * 5; // ok
+//idade = 80 / 5; // (errado) ok
+declare real idades; // ok
+idades = 80 / 5; // ok
+declare real y = 5.5; // ok
+//declare real y = 15.0; // (errado) ok
+//declare inteiro x = "ffc"; // (errado) ok
+escreva("Valor de x: " + 1); // ok
+escreva("Valor de y: " + y); // ok
+//escreva("Valor de y: " + z); // (errado) ok
+escreva("Digite seu apelido: "); // ok
+declare texto apelido;
+leia(apelido); // ok
+escreva("Digite sua idade: "); // ok
+leia(idade); //
+escreva("Digite seu salário: "); // ok
+declare real salario; // ok
+leia(salario); // ok
+escreva("==================================="); // ok
+escreva("Dados informados:"); // ok
+escreva("Nome: " + nome); // ok
+escreva("Idade: " + idade); // ok
+escreva("Salário: " + salario); // ok
 
-se (salario > 2000.0) entao {
-    escreva("Você tem um bom salário!"); };
+// Teste de estrutura condicional  // erro
+//se (idade > 18) entao {
+//    escreva("Você é maior de idade."); }
+//senao {
+//    escreva("Você é menor de idade."); };
+
+//se (salario > 2000.0) entao {
+//    escreva("Você tem um bom salário!"); };
 
 
 // Teste de loop
-declare inteiro contador = 0;
+//declare inteiro contador = 0; // erro
 
-enquanto (contador < 3) faca {
-    escreva("Loop enquanto - iteração: " + contador);
-    contador = contador + 1;
-};
+//enquanto (contador < 3) faca { // erro
+//    escreva("Loop enquanto - iteração: " + contador);
+//    contador = contador + 1;
+//};
 
-declare inteiro nomeNOME;
-// Teste de loop
-para (declare inteiro i = 0; i < 5; i = i + 1) faca {
-    escreva("Loop para - iteração: " + i);
-};
+//declare inteiro nomeNOME; // ok
+
+// Teste de loop // erro
+//para (declare inteiro i = 0; i < 5; i = i + 1) faca {
+//    escreva("Loop para - iteração: " + i);
+//};
 
 // Teste de expressões matemáticas
-declare inteiro resultado = (10 + 5) * 2 - 3;
-escreva("Resultado da expressão: " + resultado);
-escreva("Programa finalizado!");
+//declare inteiro resultado = (10 + 5) * 2 - 3; // erro
+//escreva("Resultado da expressão: " + resultado);
+//escreva("Programa finalizado!");
 
 fim

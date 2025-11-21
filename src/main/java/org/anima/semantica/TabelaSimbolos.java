@@ -68,6 +68,17 @@ public class TabelaSimbolos {
         return simbolos.size();
     }
 
+    public TipoSimbolo getTipo(String nome) {
+        // Primeiro, verifica se o símbolo existe.
+        if (existe(nome)) {
+            // Se existe, pega o objeto Simbolo associado ao nome.
+            Simbolo simbolo = simbolos.get(nome);
+            // Retorna o tipo armazenado dentro do objeto Simbolo.
+            return simbolo.getTipo();
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

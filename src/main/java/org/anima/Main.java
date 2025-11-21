@@ -85,7 +85,7 @@ public class Main {
             System.out.println("🔍 FASE 1: Análise Léxica");
             System.out.println("🔍 FASE 2: Análise Sintática\n");
 
-            ParseTree tree = parser.programa();
+            CompiladorLangParser.ProgramaContext tree = parser.programa();
 
             if (parser.getNumberOfSyntaxErrors() > 0) {
                 System.out.println("\n❌ COMPILAÇÃO FALHOU na análise sintática!");
@@ -102,6 +102,7 @@ public class Main {
             analisador.visit(tree);
 
             // Exibe a tabela de símbolos
+            System.out.println("\n✅ Tabela de símbolos: ");
             System.out.println(analisador.getTabelaSimbolos());
 
             // Verifica se houve erros semânticos
@@ -119,10 +120,10 @@ public class Main {
             System.out.println("\n✅ COMPILAÇÃO CONCLUÍDA COM SUCESSO!");
             System.out.println("   O código está sintaticamente e semanticamente correto.\n");
 
-            GeradorDeCodigoVisitor gerador = new GeradorDeCodigoVisitor();
+            GeradorDeCodigoVisitor gerador = new GeradorDeCodigoVisitor(analisador.getTabelaSimbolos());
 
 // 3. Visitar a árvore para gerar o código Java completo
-            String codigoJava = gerador.visitPrograma((CompiladorLangParser.ProgramaContext) tree);
+            String codigoJava = gerador.visitPrograma(tree);//(CompiladorLangParser.ProgramaContext) tree);
 
             try (PrintWriter out = new PrintWriter("ProgramaCompilado.java")) {
                 out.println(codigoJava);
