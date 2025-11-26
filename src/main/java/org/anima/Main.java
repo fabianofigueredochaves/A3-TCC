@@ -1,6 +1,5 @@
 package org.anima;
 
-import org.anima.semantica.TabelaSimbolos;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -37,7 +36,6 @@ public class Main {
         try {
             CharStream input = CharStreams.fromFileName(nomeArquivo);
 
-            // Agora o Java sabe onde encontrar esta classe
             CompiladorLangLexer lexer = new CompiladorLangLexer(input);
 
             lexer.removeErrorListeners();
@@ -58,7 +56,6 @@ public class Main {
 
             CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-            // E também sabe onde encontrar esta classe
             CompiladorLangParser parser = new CompiladorLangParser(tokens);
 
             parser.removeErrorListeners();
@@ -122,8 +119,8 @@ public class Main {
 
             GeradorDeCodigoVisitor gerador = new GeradorDeCodigoVisitor(analisador.getTabelaSimbolos());
 
-// 3. Visitar a árvore para gerar o código Java completo
-            String codigoJava = gerador.visitPrograma(tree);//(CompiladorLangParser.ProgramaContext) tree);
+            // Visita a árvore para gerar o código Java completo
+            String codigoJava = gerador.visitPrograma(tree);
 
             try (PrintWriter out = new PrintWriter("ProgramaCompilado.java")) {
                 out.println(codigoJava);

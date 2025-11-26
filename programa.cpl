@@ -29,23 +29,25 @@ escreva("Nome: " + nome); // ok
 escreva("Idade: " + idade); // ok
 escreva("Salário: " + salario); // ok
 
-// Teste de estrutura condicional  // erro
-//se (idade > 18) entao {
-//    escreva("Você é maior de idade."); }
-//senao {
-//    escreva("Você é menor de idade."); };
+// Teste de estrutura condicional  // ok
+se (idade > 18) entao {
+    escreva("Você é maior de idade."); }
+senao {
+    escreva("Você é menor de idade."); };
 
-//se (salario > 2000.0) entao {
-//    escreva("Você tem um bom salário!"); };
+se (salario > 2000.0) entao {
+   escreva("Você tem um bom salário!"); };
 
 
-// Teste de loop
-//declare inteiro contador = 0; // erro
+// Teste de loop // ok
 
-//enquanto (contador < 3) faca { // erro
-//    escreva("Loop enquanto - iteração: " + contador);
-//    contador = contador + 1;
-//};
+declare inteiro contador = 0; // ok
+// declare inteiro contador = 0; // (errado) ok
+
+enquanto (contador < 3) faca { // ok
+    escreva("Loop enquanto - iteração: " + contador);
+    contador = contador + 1;
+};
 
 //declare inteiro nomeNOME; // ok
 

@@ -43,9 +43,9 @@ atribuicao
 
 // --- ESTRUTURA CONDICIONAL ---
 estruturaCondicional
-    : KW_SE ABRE_PARENTESES expressao FECHA_PARENTESES KW_ENTAO
-      ABRE_CHAVES listaComandos FECHA_CHAVES
-      (KW_SENAO ABRE_CHAVES listaComandos FECHA_CHAVES)?
+    : KW_SE ABRE_PARENTESES cond=expressao FECHA_PARENTESES KW_ENTAO
+      ABRE_CHAVES entao=listaComandos FECHA_CHAVES
+      (KW_SENAO ABRE_CHAVES senao=listaComandos FECHA_CHAVES)?
       PONTO_VIRGULA
     ;
 
@@ -57,8 +57,8 @@ estruturaRepeticao
 
 // Loop ENQUANTO
 loopEnquanto
-    : KW_ENQUANTO ABRE_PARENTESES expressao FECHA_PARENTESES
-      KW_FACA ABRE_CHAVES listaComandos FECHA_CHAVES PONTO_VIRGULA
+    : KW_ENQUANTO ABRE_PARENTESES cond=expressao FECHA_PARENTESES
+      KW_FACA ABRE_CHAVES faca=listaComandos FECHA_CHAVES PONTO_VIRGULA
     ;
 
 // Loop PARA
@@ -107,10 +107,6 @@ comandoEscrita
     : KW_ESCREVA ABRE_PARENTESES expressao FECHA_PARENTESES PONTO_VIRGULA
     ;
 
-// ============================================
-// EXPRESSÕES (AQUI OS OPERADORES SÃO USADOS!)
-// ============================================
-
 // Nível 1: OR lógico (menor precedência)
 expressao
     : expressaoE (KW_OU expressaoE)*
@@ -122,7 +118,6 @@ expressaoE
     ;
 
 // Nível 3: Operadores relacionais
-// AQUI É ONDE OS OPERADORES RELACIONAIS SÃO USADOS!
 expressaoRelacional
     : expressaoAditiva
       (

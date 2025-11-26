@@ -27,6 +27,20 @@ public class ProgramaCompilado {
         System.out.println("Nome: "+nome);
         System.out.println("Idade: "+idade);
         System.out.println("Salário: "+salario);
+        if (idade>18) {
+        System.out.println("Você é maior de idade.");
+        }
+        else {
+        System.out.println("Você é menor de idade.");
+        }
+        if (salario>2000.0) {
+        System.out.println("Você tem um bom salário!");
+        }
+        int contador = 0;
+        while (contador<3) {
+        System.out.println("Loop enquanto - iteração: "+contador);
+        contador = contador+1;
+        }
     }
 }
 

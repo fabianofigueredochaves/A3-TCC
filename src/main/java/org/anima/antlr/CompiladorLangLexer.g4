@@ -1,6 +1,3 @@
-
-// Define a gramática para a linguagem CompiladorLang
-// O 'lexer grammar' indica que esta é uma gramática para o lexer
 lexer grammar CompiladorLangLexer;
 
 // --- Palavras-chave ---

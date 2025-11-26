@@ -518,16 +518,24 @@ public class CompiladorLangParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class EstruturaCondicionalContext extends ParserRuleContext {
+		public ExpressaoContext cond;
+		public ListaComandosContext entao;
+		public ListaComandosContext senao;
 		public TerminalNode KW_SE() { return getToken(CompiladorLangParser.KW_SE, 0); }
 		public TerminalNode ABRE_PARENTESES() { return getToken(CompiladorLangParser.ABRE_PARENTESES, 0); }
-		public ExpressaoContext expressao() {
-			return getRuleContext(ExpressaoContext.class,0);
-		}
 		public TerminalNode FECHA_PARENTESES() { return getToken(CompiladorLangParser.FECHA_PARENTESES, 0); }
 		public TerminalNode KW_ENTAO() { return getToken(CompiladorLangParser.KW_ENTAO, 0); }
 		public List<TerminalNode> ABRE_CHAVES() { return getTokens(CompiladorLangParser.ABRE_CHAVES); }
 		public TerminalNode ABRE_CHAVES(int i) {
 			return getToken(CompiladorLangParser.ABRE_CHAVES, i);
+		}
+		public List<TerminalNode> FECHA_CHAVES() { return getTokens(CompiladorLangParser.FECHA_CHAVES); }
+		public TerminalNode FECHA_CHAVES(int i) {
+			return getToken(CompiladorLangParser.FECHA_CHAVES, i);
+		}
+		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
+		public ExpressaoContext expressao() {
+			return getRuleContext(ExpressaoContext.class,0);
 		}
 		public List<ListaComandosContext> listaComandos() {
 			return getRuleContexts(ListaComandosContext.class);
@@ -535,11 +543,6 @@ public class CompiladorLangParser extends Parser {
 		public ListaComandosContext listaComandos(int i) {
 			return getRuleContext(ListaComandosContext.class,i);
 		}
-		public List<TerminalNode> FECHA_CHAVES() { return getTokens(CompiladorLangParser.FECHA_CHAVES); }
-		public TerminalNode FECHA_CHAVES(int i) {
-			return getToken(CompiladorLangParser.FECHA_CHAVES, i);
-		}
-		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
 		public TerminalNode KW_SENAO() { return getToken(CompiladorLangParser.KW_SENAO, 0); }
 		public EstruturaCondicionalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -572,7 +575,7 @@ public class CompiladorLangParser extends Parser {
 			setState(81);
 			match(ABRE_PARENTESES);
 			setState(82);
-			expressao();
+			((EstruturaCondicionalContext)_localctx).cond = expressao();
 			setState(83);
 			match(FECHA_PARENTESES);
 			setState(84);
@@ -580,7 +583,7 @@ public class CompiladorLangParser extends Parser {
 			setState(85);
 			match(ABRE_CHAVES);
 			setState(86);
-			listaComandos();
+			((EstruturaCondicionalContext)_localctx).entao = listaComandos();
 			setState(87);
 			match(FECHA_CHAVES);
 			setState(93);
@@ -593,7 +596,7 @@ public class CompiladorLangParser extends Parser {
 				setState(89);
 				match(ABRE_CHAVES);
 				setState(90);
-				listaComandos();
+				((EstruturaCondicionalContext)_localctx).senao = listaComandos();
 				setState(91);
 				match(FECHA_CHAVES);
 				}
@@ -679,19 +682,21 @@ public class CompiladorLangParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class LoopEnquantoContext extends ParserRuleContext {
+		public ExpressaoContext cond;
+		public ListaComandosContext faca;
 		public TerminalNode KW_ENQUANTO() { return getToken(CompiladorLangParser.KW_ENQUANTO, 0); }
 		public TerminalNode ABRE_PARENTESES() { return getToken(CompiladorLangParser.ABRE_PARENTESES, 0); }
-		public ExpressaoContext expressao() {
-			return getRuleContext(ExpressaoContext.class,0);
-		}
 		public TerminalNode FECHA_PARENTESES() { return getToken(CompiladorLangParser.FECHA_PARENTESES, 0); }
 		public TerminalNode KW_FACA() { return getToken(CompiladorLangParser.KW_FACA, 0); }
 		public TerminalNode ABRE_CHAVES() { return getToken(CompiladorLangParser.ABRE_CHAVES, 0); }
+		public TerminalNode FECHA_CHAVES() { return getToken(CompiladorLangParser.FECHA_CHAVES, 0); }
+		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
+		public ExpressaoContext expressao() {
+			return getRuleContext(ExpressaoContext.class,0);
+		}
 		public ListaComandosContext listaComandos() {
 			return getRuleContext(ListaComandosContext.class,0);
 		}
-		public TerminalNode FECHA_CHAVES() { return getToken(CompiladorLangParser.FECHA_CHAVES, 0); }
-		public TerminalNode PONTO_VIRGULA() { return getToken(CompiladorLangParser.PONTO_VIRGULA, 0); }
 		public LoopEnquantoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -722,7 +727,7 @@ public class CompiladorLangParser extends Parser {
 			setState(102);
 			match(ABRE_PARENTESES);
 			setState(103);
-			expressao();
+			((LoopEnquantoContext)_localctx).cond = expressao();
 			setState(104);
 			match(FECHA_PARENTESES);
 			setState(105);
@@ -730,7 +735,7 @@ public class CompiladorLangParser extends Parser {
 			setState(106);
 			match(ABRE_CHAVES);
 			setState(107);
-			listaComandos();
+			((LoopEnquantoContext)_localctx).faca = listaComandos();
 			setState(108);
 			match(FECHA_CHAVES);
 			setState(109);
